@@ -1,0 +1,86 @@
+DROP TABLE IF EXISTS billionaires;
+
+CREATE TABLE billionaires (
+  id INT AUTO_INCREMENT  PRIMARY KEY,
+  first_name VARCHAR(250) NOT NULL,
+  last_name VARCHAR(250) NOT NULL,
+  career VARCHAR(250) DEFAULT NULL
+);
+
+INSERT INTO billionaires (first_name, last_name, career) VALUES
+  ('Aliko', 'Dangote', 'Billionaire Industrialist'),
+  ('Bill', 'Gates', 'Billionaire Tech Entrepreneur'),
+  ('Folrunsho', 'Alakija', 'Billionaire Oil Magnate');
+   
+CREATE TABLE PRODUCT (
+	id INT AUTO_INCREMENT  PRIMARY KEY,
+	name VARCHAR(250) NOT NULL,
+	description VARCHAR(250) NULL,
+	version INT NULL
+)
+
+CREATE TABLE PRODUCT_PRICE (
+	id INT AUTO_INCREMENT  PRIMARY KEY,
+	name VARCHAR(250) NOT NULL,
+	description VARCHAR(250),
+	price FLOAT(2) NOT NULL,
+	product_id INT  NOT NULL,
+	start_offer DATETIME,
+	end_offer DATETIME,
+	version INT NULL
+)
+
+ALTER TABLE PRODUCT_PRICE
+ADD FOREIGN KEY (product_id) REFERENCES PRODUCT (id);
+
+
+CREATE TABLE USER(
+	id INT AUTO_INCREMENT  PRIMARY KEY,
+	first_name VARCHAR(250) NOT NULL,
+  	last_name VARCHAR(250) NOT NULL,
+	version INT NULL
+)
+
+DROP TABLE USER_ADDRESS
+
+CREATE TABLE USER_ADDRESS(
+	id INT AUTO_INCREMENT  PRIMARY KEY,
+	nation VARCHAR(250) NOT NULL,
+  	city VARCHAR(250) NOT NULL,
+  	zipcode VARCHAR(250) NOT NULL,
+  	street VARCHAR(250) NOT NULL,
+  	user_id INT NULL,
+	version INT NULL
+)
+
+CREATE TABLE USER_ADDRESS(
+	id INT AUTO_INCREMENT  PRIMARY KEY,
+	nation VARCHAR(250) NOT NULL,
+  	city VARCHAR(250) NOT NULL,
+  	zipcode VARCHAR(250) NOT NULL,
+  	street VARCHAR(250) NOT NULL,
+  	user_id INT NOT NULL,
+	version INT NULL
+)
+
+
+ ALTER TABLE USER_ADDRESS
+ADD FOREIGN KEY (user_id) REFERENCES USER (id);
+
+ 
+ CREATE TABLE PRODUCT_ORDER(
+    product_id INT NOT NULL,
+	user_id INT NOT NULL,
+	price_id INT NOT NULL,
+    order_datetime DATETIME NOT NULL,
+	version INT NULL
+ )
+
+ ALTER TABLE PRODUCT_ORDER
+ADD FOREIGN KEY (product_id) REFERENCES PRODUCT (id);
+
+ ALTER TABLE PRODUCT_ORDER
+ADD FOREIGN KEY (user_id) REFERENCES USER (id);
+
+ ALTER TABLE PRODUCT_ORDER
+ADD FOREIGN KEY (price_id) REFERENCES PRODUCT_PRICE (id);
